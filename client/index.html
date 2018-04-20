@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="assets/styles/main.css" />
+  <script src="assets/scripts/main.js" type="text/ecmascript"></script>
+  <title>Blues</title>
+</head>
+
+<body>
+  <div id="container">
+
+    <!-- The Control Panel. One with Start/Stop buttons. -->
+    <div id="controlPanel">
+      <img src="assets/images/Teams.png">
+      <button id="start" type="submit" onclick="Start();">Let the game begin</button>
+      <button id="stop" type="reset" onclick="Reset();" class="disabled" disabled>I've had enough</button>
+    </div>
+
+    <!-- The Score Panel. One with the scores and other messages. -->
+    <div id="gamePanel">
+      <p id="score">0   –   0</p>
+
+      <div id="chelsea">
+        <p>CHELSEA</p>
+        <br />
+      </div>
+
+      <div id="minutes">
+        <p> </p>
+        <br />
+      </div>
+      <div id="juventus">
+        <p>JUVENTUS</p>
+        <br />
+      </div>
+
+      <p id="result" class="result"></p>
+    </div>
+</div>
+</body>
+
+</html>
