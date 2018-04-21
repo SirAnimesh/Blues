@@ -1,0 +1,16 @@
+##
+##  .gitignore
+##  Blues
+##  
+##  This file describes the files/directories that should be excluded by the version control system.
+##
+##  Created on 21 April, 2018 by Animesh Mishra <hello@animesh.ltd>
+##  © 2018 Animesh Ltd. All Rights Reserved.
+##
+
+# Node and dependencies
+server/node_modules
+
+# Transpiled JS files need not be checked into source control as they are mere derivatives of the 
+# TypeScript source code and can be generated on demand.
+server/compiled

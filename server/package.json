@@ -4,6 +4,8 @@
   "description": "The message queue server powering the Blues application",
   "main": "server.js",
   "scripts": {
+    "postinstall": "tsc",
+    "start": "node compiled/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +21,16 @@
     "url": "https://gitlab.com/code-contest/Blues/issues",
     "email": "hello@animesh.ltd"
   },
-  "homepage": "https://gitlab.com/code-contest/Blues#README"
+  "homepage": "https://gitlab.com/code-contest/Blues#README",
+  "dependencies": {
+    "@types/amqplib": "^0.5.7",
+    "@types/body-parser": "^1.16.8",
+    "@types/express": "^4.11.1",
+    "@types/morgan": "^1.7.35",
+    "amqplib": "^0.5.2",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "typescript": "^2.8.3"
+  }
 }
