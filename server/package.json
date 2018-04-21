@@ -1,0 +1,23 @@
+{
+  "name": "blues-server",
+  "version": "0.1.0",
+  "description": "The message queue server powering the Blues application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/code-contest/Blues.git"
+  },
+  "author": {
+    "name": "Animesh Mishra",
+    "email": "hello@animesh.ltd"
+  },
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://gitlab.com/code-contest/Blues/issues",
+    "email": "hello@animesh.ltd"
+  },
+  "homepage": "https://gitlab.com/code-contest/Blues#README"
+}

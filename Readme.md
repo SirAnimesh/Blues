@@ -107,7 +107,7 @@ Since, at some point we might want multiple clients to show match data simultane
 that only one application receives any given message rules it out. Thus, publish/subscribe it is.
 
 ### Which queue manager to use: RabbitMQ or ZeroMQ?
-To be quite honest, I still don't understand ZeroMQ well. Hence, despite it's bigger footprint, I'm choosing
+To be quite honest, I still don't understand ZeroMQ well. Hence, despite its bigger footprint, I'm choosing
 RabbitMQ because I found the documentation far easier to understand for total beginners like me.
 
 ### How to model application data? Which database to use?
