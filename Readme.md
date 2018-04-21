@@ -22,7 +22,16 @@ along with the source of the message.
 4. A database
 
 ## Things I'll need to research
-- Websockets
+### Websockets
+Lower level protocols such as TCP are designed to deliver one message from one sender to one receiver. They
+have no opinion on how the message should be structured, requested, retrieved, secured or stored. They are
+merely pipes allowing flow of data across a network.
+
+Protocols like WebSockets (and HTTP) sit on top of TCP and add additional functionality, such as headers to
+transport metadata, packets managements, basic authentication etc. WebSockets allow you to send message to a
+server and receive event-driven responses without having to poll the server for a reply.
+
+More on [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
 
 ### Message Queues
 Message queues enable programs to communicate with one another using a consistent API. *Messaging* means that 
@@ -79,17 +88,51 @@ publication. A subscriber is sent information about only those topics it subscri
 
 Learn more at [IBM Knowledge Center](https://www.ibm.com/support/knowledgecenter/SSFKSJ_9.0.0/com.ibm.mq.pro.doc/q004870_.htm).
 
-### RabbitMQ
+### RabbitMQ and ZeroMQ
+RabbitMQ is a message broker: it accepts and forwards messages. It speaks Advanced Message Queuing Protocol (AMQP)
+which is an open, general-purpose protocol for messaging. Support for other protocols such as STOMP and MQTT can be
+added via a plugin. It supports both point-to-point and publish/subcribe messaging.
 
+ZeroMQ is not a central server, rather a library to be used client-side. It aims to be a faster, decentralised
+alternative to AMQP. It does support both the aforementioned messaging patterns, but requires the developer to 
+write a small server to support many-to-many connections. For this task, that's not much of a problem because we 
+have a one-to-one or at most one-to-many (one server, many clients) scenario here.
 
+Source: [Overview of realtime protocols](https://deepstreamhub.com/blog/an-overview-of-realtime-protocols/)
 
 ## Architectural Questions
 
 ### Which messaging paradigm to implement: point-to-point messaging or PubSub?
+Since, at some point we might want multiple clients to show match data simultaneously, point-to-point's property 
+that only one application receives any given message rules it out. Thus, publish/subscribe it is.
 
 ### Which queue manager to use: RabbitMQ or ZeroMQ?
+To be quite honest, I still don't understand ZeroMQ well. Hence, despite it's bigger footprint, I'm choosing
+RabbitMQ because I found the documentation far easier to understand for total beginners like me.
 
 ### How to model application data? Which database to use?
+I've found that when starting out, it's best to use a NoSQL database, experiment with schemas and once the dust is
+settled, switch to SQL database. I'll be doing the same here. MongoDB. 
+
+Both services will use the following message schema:
+```json
+{
+  "source": "chelsea",
+  "type": "Goal",
+  "player": "Hazard",
+  "minute": 8
+}
+```
+`source`: Source of the message. Either of "chelsea" or "juventus" <br/>
+`type`: Type of event. Either of `Goal`, `Goal(P)`, `Booking(Y)`, `Booking(R)`, `Foul`, `Save` <br/>
+`player`: Player in action <br/>
+`minute`: Minute count at which the event occurred <br/>
+
+### Which language to use?
+Despite my repugnance at JavaScript, I intend to write the entire application in TypeScript/JavaScript. Node.js
+is an excellent choice for protoyping (but terrible for production). Plus the JS ecosystem has very rich support
+for websockets. Plus there's no viable alternative to JavaScript for front-end work, and for such a short project
+it'd be good to save on context-switching costs.
 
 ## Development Plan
 
