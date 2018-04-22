@@ -175,7 +175,7 @@ it'd be good to save on context-switching costs.
 ×   Release. <br/>
 ×   Party. <br/>
 
-# Closing Notes
+## Closing Notes
 ### How I approached the problem
 One of the first things I did after reading the assignment, was to design the UI. The process of UI design actually 
 helps me take stock of all the features, and the underlying data structures, that my application will have to support. 
@@ -187,7 +187,62 @@ glad to have discovered them. Perhaps, in hindsight, going for a publish/subscri
 newbie like me. I understand the concepts fully, and I feel I'm very close to getting it right, but need a bit more
 time to get comfortable with Rabbit MQ.
 
-### Solution Architecture
-![solutionArchitecture]()
+### Missing essentials
+* No unit testing
+* Can't be hosted remotely (missing configuration bits)
+* Should provide a `dockerfile` to obviate the need for [pre-run setup](how-to-run-the-program).
 
-◊ - not implemented
+### Solution Architecture
+![Architecture](client/assets/images/Architecture.png)
+
+## How to run the program
+### Pre-requisites
+1. [Node.js 9.11.1](https://nodejs.org/en/download/current/)
+2. A modern browser with [Websockets support](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API#Browser_compatibility)
+3. [RabbitMQ 3.7](https://www.rabbitmq.com/download.html)
+
+### Steps
+*I'm not familiar with Windows, so please do excuse Mac/UNIX-specific instructions in this section.*
+
+1. **Fire up a local instance of RabbitMQ server**
+    The RabbitMQ server scripts are installed into `/usr/local/sbin`. This is not automatically added to your path, 
+    so you may wish to add `PATH=$PATH:/usr/local/sbin` to your `.bash_profile` or `.profile`. The server can then 
+    be started with `rabbitmq-server`.
+
+    Open Terminal (Command Prompt/PowerShell on Windows) and type the following command
+    ```
+    rabbitmq-server
+    ```
+    
+    This would spin up a local RabbitMQ server. You should have the following output in your Terminal window.   
+    ```
+    ##  ##
+    ##  ##      RabbitMQ 3.7.4. Copyright (C) 2007-2018 Pivotal Software, Inc.
+    ##########  Licensed under the MPL.  See http://www.rabbitmq.com/
+    ######  ##
+    ##########  Logs: /usr/local/var/log/rabbitmq/rabbit@localhost.log
+                    /usr/local/var/log/rabbitmq/rabbit@localhost_upgrade.log
+
+              Starting broker...
+    completed with 6 plugins.
+    ```
+
+    **Do not close the Terminal window.**
+
+2. **Start the server**.
+    Open a new Terminal window at the root of this project, switch to the `server` directory and type in the following:
+    ```
+    npm install
+    ```
+    This will install all project dependencies (including Typescript) and transpile the `.ts` files to `.js`.
+
+    ```
+    Ashs-Mac:server animesh$ npm install
+    > blues-server@0.1.0 postinstall /Users/animesh/Developer/Blues/server
+    > tsc
+    added 71 packages in 3.644s
+    ``` 
+    Now our server is ready for primetime. In your Terminal window, type `npm start`. A websockets server will start
+    listening at `localhost:8080`.
+
+3. **Start the simulation**. Open `client/index.html` in your favourite browser and click the Start button.
