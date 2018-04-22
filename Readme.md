@@ -1,8 +1,5 @@
 # Blues
 
-## Demo
-<iframe width="560" height="315" src="https://www.youtube.com/embed/YHRmSLJRboU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
 ## Task
 Develop a WebSockets (browser based) client that requests an asynchronous reply from a message queue that
 fans out to at least 2 possible solution services. Eg. the browser contacts the 'Name the first pasta dish
@@ -18,13 +15,16 @@ bookings, substitutions - to the message queue. The Chelsea service will post Ch
 Juventus service would work likewise. Each event will be persisted in a database, and displayed by the client
 along with the source of the message.
 
-## Moving Parts
-1. A website (the client)
-2. A message queue server
-3. Services that feed the message queue
-4. A database
+## Demo
+[![Demo video](client/assets/images/video.png)]("https://www.youtube.com/embed/YHRmSLJRboU)
 
-## Things I'll need to research
+## Moving Parts
+✔ A website (the client)  <br/>
+✔ A message queue server  <br/>
+✔ Services that feed the message queue  <br/>
+× A database
+
+## Things I had to learn
 ### Websockets
 Lower level protocols such as TCP are designed to deliver one message from one sender to one receiver. They
 have no opinion on how the message should be structured, requested, retrieved, secured or stored. They are
@@ -109,6 +109,8 @@ Source: [Overview of realtime protocols](https://deepstreamhub.com/blog/an-overv
 Since, at some point we might want multiple clients to show match data simultaneously, point-to-point's property 
 that only one application receives any given message rules it out. Thus, publish/subscribe it is.
 
+**EDIT**: I failed to properly implement a true publish/subscribe system. See [Closing Notes](#closing-notes)
+
 ### Which queue manager to use: RabbitMQ or ZeroMQ?
 To be quite honest, I still don't understand ZeroMQ well. Hence, despite its bigger footprint, I'm choosing
 RabbitMQ because I found the documentation far easier to understand for total beginners like me.
@@ -120,16 +122,42 @@ settled, switch to SQL database. I'll be doing the same here. MongoDB.
 Both services will use the following message schema:
 ```json
 {
-  "source": "chelsea",
+  "source": "Chelsea",
   "type": "Goal",
   "player": "Hazard",
   "minute": 8
 }
 ```
-`source`: Source of the message. Either of "chelsea" or "juventus" <br/>
+`source`: Source of the message. Either of "Chelsea" or "Juventus" <br/>
 `type`: Type of event. Either of `Goal`, `Goal(P)`, `Booking(Y)`, `Booking(R)`, `Foul`, `Save` <br/>
 `player`: Player in action <br/>
 `minute`: Minute count at which the event occurred <br/>
+
+The front-end will cache match data until the match is over, and then write the following document to a NoSQL DB.
+```json
+{
+  "date": "2091301203812",
+  "winner": "Chelsea",
+  "team1": "Chelsea",
+  "team1Score": 4,
+  "team2": "Juventus",
+  "team2Score": 3,
+  "events": {
+      "team1": [...],
+      "team2": [...]
+  }
+}
+```
+`date`: Match day
+`winner`: team1 | draw | team2
+`team1`: The home team
+`team1Score`: Number of goals scored by team1
+`team2`: The away team
+`team2Score`: Number of goals score by away team
+`events.team1`: Match events related to team1. Array of `message` instance
+`events.team2`: Match events related to team2. Array of `message` instances
+
+**EDIT**: I failed to implement data persistence layer in time. See [Closing Notes](#closing-notes)
 
 ### Which language to use?
 Despite my repugnance at JavaScript, I intend to write the entire application in TypeScript/JavaScript. Node.js
@@ -138,12 +166,28 @@ for websockets. Plus there's no viable alternative to JavaScript for front-end w
 it'd be good to save on context-switching costs.
 
 ## Development Plan
+✔   Write a website that mocks up responses from a message queue. This would allow me to test the website in isolation. <br/>
+✔   Implement a message queue server, and fill it with random messages. Again, this way we can test the MQ in isolation. <br/>
+✔   Now connect the website with MQ. <br/>
+✔   Write services that feed the message queue. <br/>
+✔   Connect services and MQ together. <br/>
+×   Test the whole chain. Couldn't integrate database in time. <br/>
+×   Release. <br/>
+×   Party. <br/>
 
-1.  Write a website that mocks up responses from a message queue. This would allow me to test the website in isolation.
-2.  Implement a message queue server, and fill it with random messages. Again, this way we can test the MQ in isolation.
-3.  Now connect the website with MQ.
-4.  Write services that feed the message queue.
-5.  Connect services and MQ together.
-6.  Test the whole chain.
-7.  Release.
-8.  Party.
+# Closing Notes
+### How I approached the problem
+One of the first things I did after reading the assignment, was to design the UI. The process of UI design actually 
+helps me take stock of all the features, and the underlying data structures, that my application will have to support. 
+It also helps me build a mental model of the communication chain (frontend -> server -> services -> server -> frontend).
+
+### Things I learned
+Tons. I had never read a word on Websockets or message queues. This was my first encounter with them and aren't I
+glad to have discovered them. Perhaps, in hindsight, going for a publish/subscribe model wasn't ideal for total
+newbie like me. I understand the concepts fully, and I feel I'm very close to getting it right, but need a bit more
+time to get comfortable with Rabbit MQ.
+
+### Solution Architecture
+![solutionArchitecture]()
+
+◊ - not implemented
