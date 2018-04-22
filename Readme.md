@@ -16,7 +16,7 @@ Juventus service would work likewise. Each event will be persisted in a database
 along with the source of the message.
 
 ## Demo
-[![Demo video](client/assets/images/video.png)]("https://www.youtube.com/embed/YHRmSLJRboU)
+[![Demo video](client/assets/images/video.png)](https://youtu.be/YHRmSLJRboU)
 
 ## Moving Parts
 ✔ A website (the client)  <br/>
@@ -191,6 +191,12 @@ time to get comfortable with Rabbit MQ.
 * No unit testing
 * Can't be hosted remotely (missing configuration bits)
 * Should provide a `dockerfile` to obviate the need for [pre-run setup](how-to-run-the-program).
+
+### Third-party code
+* Used the [`ws`](https://github.com/websockets/ws) library for writing a websockets server. Mozilla recommends this library. Client-side uses native `Websocket` API.
+* Used [`amqplib`](http://www.squaremobius.net/amqp.node/channel_api.html) for working with RabbitMQ. RabbitMQ docs recommend this library.
+
+Except this, I've written all the code, both client-side and server-side, myself.
 
 ### Solution Architecture
 ![Architecture](client/assets/images/Architecture.png)
