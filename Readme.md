@@ -1,5 +1,8 @@
 # Blues
 
+## Demo
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YHRmSLJRboU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
 ## Task
 Develop a WebSockets (browser based) client that requests an asynchronous reply from a message queue that
 fans out to at least 2 possible solution services. Eg. the browser contacts the 'Name the first pasta dish
