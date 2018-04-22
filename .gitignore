@@ -14,3 +14,6 @@ server/node_modules
 # Transpiled JS files need not be checked into source control as they are mere derivatives of the 
 # TypeScript source code and can be generated on demand.
 server/compiled
+
+# Visual Studio Code settings
+.vscode
