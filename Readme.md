@@ -148,14 +148,14 @@ The front-end will cache match data until the match is over, and then write the 
   }
 }
 ```
-`date`: Match day
-`winner`: team1 | draw | team2
-`team1`: The home team
-`team1Score`: Number of goals scored by team1
-`team2`: The away team
-`team2Score`: Number of goals score by away team
-`events.team1`: Match events related to team1. Array of `message` instance
-`events.team2`: Match events related to team2. Array of `message` instances
+`date`: Match day  <br/>
+`winner`: team1 | draw | team2  <br/>
+`team1`: The home team  <br/>
+`team1Score`: Number of goals scored by team1  <br/>
+`team2`: The away team  <br/>
+`team2Score`: Number of goals score by away team  <br/>
+`events.team1`: Match events related to team1. Array of `message` instance  <br/>
+`events.team2`: Match events related to team2. Array of `message` instances 
 
 **EDIT**: I failed to implement data persistence layer in time. See [Closing Notes](#closing-notes)
 
